@@ -1,0 +1,12 @@
+mettre à jour les lib
+- en particulier, bootstrap doit maintenant pouvoir fonctionner sans jquery (utile ici juste pour les modales a priori)
+
+
+type d'arrêt avec trois boutons (si bus), sinon, pas de type ?
+
+
+calcTrackDuration
+https://github.com/KaiRo-at/lantea/blob/master/js/ui.js#L308
+
+osm-requets pour la connexion à OSM et pour envoyer la trace ?
+envoi de la trace à OSM : https://wiki.openstreetmap.org/wiki/API_v0.6#Create:_POST_.2Fapi.2F0.6.2Fgpx.2Fcreate

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>New Track</title>
+
+        <link rel="stylesheet" href="assets/third_parties/bootstrap-3.3.6/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/third_parties/font-awesome-4.5.0/css/font-awesome.min.css">
+        <style>
+            /*Fix for Font Awesome ApplicatonManifest offline Cache */
+
+            @font-face {
+                font-family: 'FontAwesome';
+                src: url("assets/third_parties/font-awesome-4.5.0/fonts/fontawesome-webfont.eot");
+                src: url("assets/third_parties/font-awesome-4.5.0/fonts/fontawesome-webfont.eot") format('embedded-opentype'), url("assets/third_parties/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2") format('woff2'), url("assets/third_parties/font-awesome-4.5.0/fonts/fontawesome-webfont.woff") format('woff'), url("assets/third_parties/font-awesome-4.5.0/fonts/fontawesome-webfont.ttf") format('truetype'), url("assets/third_parties/font-awesome-4.5.0/fonts/fontawesome-webfont.svg") format('svg');
+                font-weight: normal;
+                font-style: normal;
+            }
+        </style>
+        <link href="assets/third_parties/jqueryui-1.11.4/jquery-ui.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="assets/css/app.css">
+
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    </head>
+
+    <body>
+
+        <div class="row">
+            <div id="tracking_status" class="col-6"></div>
+        </div>
+        <div class="row">
+            <div id="track_name" class="col-xs-8">Unamed track</div>
+            <button type="button" class="btn btn-default col-xs-2" onclick="edit_track_info()">
+                <i class="fa fa-edit"></i>
+
+            </button>
+        </div>
+        <div class="row">
+            <div>
+                <span id="passengers_count">0</span>
+                        passengers
+                    </div>
+                </div>
+                <div class="row">
+                    <button type="button" class="btn btn-default col-xs-6" onclick="add_stop()">
+                        <i class="fa fa-suitcase"></i>
+                        New stop
+                    </button>
+                    <button type="button" class="btn btn-default col-xs-6" onclick="add_incident()">
+                        <i class="fa fa-suitcase"></i>
+                        Incident
+                    </button>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4"></div>
+                    <button type="button" class="btn btn-default col-xs-4" onclick="end_track()">
+                        <i class="fa fa-suitcase"></i>
+                        End track
+                    </button>
+                    <div class="col-xs-4"></div>
+                </div>
+
+                <div class="modal fade" id="StopModal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">New stop</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="stop_name">&nbsp;Name
+                                    </label>
+                                    <input id="stop_name" type="text" class="form-control">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                      <label for="stop_passenger_up">Up</label>
+                                      <input type="number" class="form-control" id="stop_passenger_up">
+                                    </div>
+                                  <div class="form-group col-md-4">
+                                      <label for="stop_passenger_total">previously ...</label>
+                                       <input id="stop_passenger_total" type="text" class="form-control" disabled placeholder="0 passengers">
+                                  </div>
+                                  <div class="form-group col-md-4">
+                                    <label for="stop_passenger_down">Down</label>
+                                    <input type="number" class="form-control" id="stop_passenger_down">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="stop_type">&nbsp;Type
+                                    </label>
+                                    <input id="stop_type" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="save_stop_info()">Save</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+
+                <div class="modal fade" id="TrackInfoModal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Edit track info</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="track_mode">Mode</label>
+                                    <select class="form-control" id="track_mode">
+                                        <option>bus</option>
+                                        <option>boat</option>
+                                        <option>tram</option>
+                                        <option>subway</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="track_ref">&nbsp;Number
+                                    </label>
+                                    <input id="track_ref" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="track_origin">&nbsp;Origin
+                                    </label>
+                                    <input id="track_origin" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="track_destination">&nbsp;Destination
+                                    </label>
+                                    <input id="track_destination" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="track_network">&nbsp;Network
+                                    </label>
+                                    <input id="track_network" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="track_operator">&nbsp;Operator
+                                    </label>
+                                    <input id="track_operator" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="track_fare">&nbsp;Price
+                                    </label>
+                                    <input id="track_fare" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="track_comment">&nbsp;Comment
+                                    </label>
+                                    <textarea id="track_comment" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="save_track_info()">Save</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+
+                <script src="assets/third_parties/jquery-1.12.0.min.js"></script>
+                <script type="text/javascript" src="assets/third_parties/jqueryui-1.11.4/jquery-ui.min.js"></script>
+                <script src="assets/third_parties/bootstrap-3.3.6/bootstrap.min.js"></script>
+                <script src="assets/js/track.js"></script>
+            </body>
+
+        </html>

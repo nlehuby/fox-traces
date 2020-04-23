@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Jungle Tracker</title>
+
+        <link rel="stylesheet" href="assets/third_parties/bootstrap-3.3.6/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/third_parties/font-awesome-4.5.0/css/font-awesome.min.css">
+        <style>
+            /*Fix for Font Awesome ApplicatonManifest offline Cache */
+
+            @font-face {
+                font-family: 'FontAwesome';
+                src: url("assets/third_parties/font-awesome-4.5.0/fonts/fontawesome-webfont.eot");
+                src: url("assets/third_parties/font-awesome-4.5.0/fonts/fontawesome-webfont.eot") format('embedded-opentype'), url("assets/third_parties/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2") format('woff2'), url("assets/third_parties/font-awesome-4.5.0/fonts/fontawesome-webfont.woff") format('woff'), url("assets/third_parties/font-awesome-4.5.0/fonts/fontawesome-webfont.ttf") format('truetype'), url("assets/third_parties/font-awesome-4.5.0/fonts/fontawesome-webfont.svg") format('svg');
+                font-weight: normal;
+                font-style: normal;
+            }
+        </style>
+        <link rel="stylesheet" href="assets/third_parties/leaflet-0.7.7/leaflet.css">
+        <link href="assets/third_parties/jqueryui-1.11.4/jquery-ui.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="assets/css/app.css">
+
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    </head>
+
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <div class="navbar-icon-container"></div>
+                    <a class="navbar-brand" href="#">Jungle Tracker
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Oauth message - utilisateur pas connecté -->
+        <div class="alert alert-danger" role="alert" id="alert_no_auth">Vous n'êtes pas connecté à OpenStreetMap, vous ne pouvez donc pas effectuer de modifications.
+            <button id='OSM_authenticate'>Se connecter</button>
+        </div>
+
+    <div class="row">
+
+            <button type="button" class="btn btn-default col-xs-6" onclick="open_new_track_page()">
+                <i class="fa fa-suitcase"></i>
+                Nouvelle trace
+            </button>
+        </div>
+
+        <!-- Oauth message - utilisateur connecté -->
+        <div class="alert alert-success" role="alert" id="alert_auth">Vous êtes bien connecté à OpenStreetMap.
+            <a onclick="$('#OSM_auth_modal').modal('show');">En savoir plus</a>
+        </div>
+
+
+        <div class="modal fade" id="OSM_auth_modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Connexion OSM</h4>
+                    </div>
+                    <div class="modal-body">
+                        Vous êtes connecté à OpenStreetMap en tant que
+                        <span id="OSM_user">...</span>.
+                        <br>
+                        <a id='OSM_logout'>Se déconnecter</a>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
+        <script src="assets/third_parties/jquery-1.12.0.min.js"></script>
+        <script src="assets/third_parties/bootstrap-3.3.6/bootstrap.min.js"></script>
+        <script src='assets/third_parties/OSM_js_editor/osmauth.min.js'></script>
+        <script src="assets/js/osm_js_editor_auth.js"></script>
+        <script src="assets/js/index.js"></script>
+    </body>
+
+</html>

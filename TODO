@@ -1,7 +1,6 @@
 mettre à jour les lib
 - en particulier, bootstrap doit maintenant pouvoir fonctionner sans jquery (utile ici juste pour les modales a priori)
 
-
 type d'arrêt avec trois boutons (si bus), sinon, pas de type ?
 
 

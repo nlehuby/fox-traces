@@ -18,7 +18,7 @@ var passenger_count = 0;
 var tracking_status_div = document.getElementById("tracking_status");
 
 var geoloc_options = {
-    enableHighAccuracy: false, //TODO
+    enableHighAccuracy: true, 
     timeout: 5000,
     maximumAge: 0
 };
@@ -161,7 +161,7 @@ function convertTrack(aTargetFormat) {
       if (track_stops.length){
           for (var i = 0; i < track_stops.length; i++) {
               out += `
-              <wpt lat="${track_stops[i].position.coords.latitude}" lon="-4.0733333">
+              <wpt lat="${track_stops[i].position.coords.latitude}" lon="${track_stops[i].position.coords.longitude}">
                     <time>${ makeISOString(track_stops[i].position.time)}</time>
                     <name>${track_stops[i].name || ''}</name>
                     <extensions>

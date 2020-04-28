@@ -40,7 +40,7 @@ function display_traces_list() {
              </transport-thumbnail>
              </div>
              <div class="card-body">
-               <p class="card-text">${track['stops'].length } stops 🚏</p>
+               <p class="card-text">~ ${track['info']['duration'] } min - ${track['stops'].length } stops 🚏</p>
                <a href="#" class="btn btn-primary" onclick="download_a_track('${i}')">Download</a> <a href="#" class="btn btn-primary" onclick="send_a_track_to_osm('${i}')">Send to OSM</a><a href="#" onclick="delete_a_track('${i}')">Delete</a>
              </div>
            </div>
@@ -72,7 +72,7 @@ function delete_a_track(track_id) {
 function save_track_as_gpx(track) {
     var out = "";
     out += '<?xml version="1.0" encoding="UTF-8" ?>' + "\n\n";
-    out += '<gpx version="1.0" creator="Jungle Tracker" xmlns="http://www.topografix.com/GPX/1/0">' + "\n";
+    out += '<gpx version="1.0" creator="Fox traces" xmlns="http://www.topografix.com/GPX/1/0">' + "\n";
     if (track.info) {
         out += `
   <metadata>

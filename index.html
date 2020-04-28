@@ -11,7 +11,7 @@
         <meta name="author" content="nlehuby">
         <title>Jungle Tracker</title>
 
-        <link rel="stylesheet" href="assets/third_parties/bootstrap-3.3.6/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/third_parties/bootstrap.min.css">
         <link rel="stylesheet" href="assets/third_parties/font-awesome-4.5.0/css/font-awesome.min.css">
         <style>
             /*Fix for Font Awesome ApplicatonManifest offline Cache */
@@ -24,72 +24,66 @@
                 font-style: normal;
             }
         </style>
-        <link rel="stylesheet" href="assets/third_parties/leaflet-0.7.7/leaflet.css">
-        <link href="assets/third_parties/jqueryui-1.11.4/jquery-ui.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="assets/css/app.css">
 
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
 
     </head>
 
     <body>
-        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <div class="navbar-icon-container"></div>
-                    <a class="navbar-brand" href="#">Jungle Tracker
-                    </a>
-                </div>
+
+        <nav class="navbar navbar-light bg-warning">
+            <a class="navbar-brand" href="#">
+                Jungle Tracker
+            </a>
+        </nav>
+        <div class="container">
+
+            <!-- Oauth message - utilisateur pas connecté -->
+            <div class="alert alert-danger" role="alert" id="alert_no_auth">You are not logged to OpenStreetMap. You won't be able to upload your tracks.
+                <button id='OSM_authenticate'>Log in</button>
             </div>
-        </div>
 
+            <div class="row">
 
-
-        <!-- Oauth message - utilisateur pas connecté -->
-        <div class="alert alert-danger" role="alert" id="alert_no_auth">You are not logged to OpenStreetMap. You won't be able to upload your tracks.
-            <button id='OSM_authenticate'>Log in</button>
-        </div>
-
-    <div class="row">
-
-            <button type="button" class="btn btn-default col-xs-6" onclick="open_new_track_page()">
-                <i class="fa fa-suitcase"></i>
-                New track
-            </button>
-        </div>
+                <button type="button" class="btn btn-default col-xs-6" onclick="open_new_track_page()">
+                    <i class="fa fa-suitcase"></i>
+                    New track
+                </button>
+            </div>
 
             <div class="row" id="traces_list">
                 <div class="card">
-                  <div class="card-header">
-                    Fake track
-                  </div>
-                  <div class="card-body">
-                    <p class="card-text">Fake description of the track.</p>
-                    <a href="#" class="btn btn-primary">Button</a> <a href="#" class="btn btn-primary">Another button</a><a href="#">Yet another button</a>
-                  </div>
+                    <div class="card-header">
+                        Fake track
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Fake description of the track.</p>
+                        <a href="#" class="btn btn-primary">Button</a>
+                        <a href="#" class="btn btn-primary">Another button</a>
+                        <a href="#">Yet another button</a>
+                    </div>
                 </div>
-
 
             </div>
 
-        <!-- Oauth message - utilisateur connecté -->
-        <div class="alert alert-success" role="alert" id="alert_auth">You are connected to OpenStreetMap.
-            <a onclick="$('#OSM_auth_modal').modal('show');">Learn more</a>
+            <!-- Oauth message - utilisateur connecté -->
+            <div class="alert alert-success" role="alert" id="alert_auth">You are connected to OpenStreetMap.
+                <a class="btn btn-light" onclick="$('#OSM_auth_modal').modal('show');">Learn more</a>
+            </div>
         </div>
-
 
         <div class="modal fade" id="OSM_auth_modal" tabindex="-1" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <h4 class="modal-title">OSM login</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Connect to OSM</h4>
                     </div>
                     <div class="modal-body">
                         You are logged in as
                         <span id="OSM_user">...</span>.
                         <br>
-                        <a id='OSM_logout'>Se déconnecter</a>
+                        <a class="btn btn-light" id='OSM_logout'>Log out</a>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -101,8 +95,8 @@
         </div>
         <!-- /.modal -->
 
-        <script src="assets/third_parties/jquery-1.12.0.min.js"></script>
-        <script src="assets/third_parties/bootstrap-3.3.6/bootstrap.min.js"></script>
+        <script src="assets/third_parties/jquery-3.2.1.slim.min.js"></script>
+        <script src="assets/third_parties/bootstrap.min.js"></script>
         <script src='assets/third_parties/OSM_js_editor/osmauth.min.js'></script>
         <script src="assets/js/osm_js_editor_auth.js"></script>
         <script src="assets/js/index.js"></script>

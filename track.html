@@ -12,18 +12,6 @@
         <title>New Track</title>
 
         <link rel="stylesheet" href="assets/third_parties/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/third_parties/font-awesome-4.5.0/css/font-awesome.min.css">
-        <style>
-            /*Fix for Font Awesome ApplicatonManifest offline Cache */
-
-            @font-face {
-                font-family: 'FontAwesome';
-                src: url("assets/third_parties/font-awesome-4.5.0/fonts/fontawesome-webfont.eot");
-                src: url("assets/third_parties/font-awesome-4.5.0/fonts/fontawesome-webfont.eot") format('embedded-opentype'), url("assets/third_parties/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2") format('woff2'), url("assets/third_parties/font-awesome-4.5.0/fonts/fontawesome-webfont.woff") format('woff'), url("assets/third_parties/font-awesome-4.5.0/fonts/fontawesome-webfont.ttf") format('truetype'), url("assets/third_parties/font-awesome-4.5.0/fonts/fontawesome-webfont.svg") format('svg');
-                font-weight: normal;
-                font-style: normal;
-            }
-        </style>
 
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
 
@@ -37,8 +25,8 @@
             </div>
             <div class="row">
                 <div id="track_name" class="col-xs-8">Unamed track</div>
-                <button type="button" class="btn btn-default col-xs-2" onclick="edit_track_info()">
-                    <i class="fa fa-edit"></i>
+                <button type="button" class="btn btn-secondary col-xs-2" onclick="edit_track_info()">
+                    <i>✍️</i>
 
                 </button>
             </div>
@@ -49,19 +37,19 @@
                 </div>
             </div>
             <div class="row">
-                <button type="button" class="btn btn-default col-xs-6" onclick="add_stop()">
-                    <i class="fa fa-suitcase"></i>
+                <button type="button" class="btn btn-secondary col-xs-6" onclick="add_stop()">
+                    <i>🚏</i>
                     New stop
                 </button>
-                <button type="button" class="btn btn-default col-xs-6" onclick="add_incident()">
-                    <i class="fa fa-suitcase"></i>
+                <button type="button" class="btn btn-secondary col-xs-6" onclick="add_incident()">
+                    <i>⚠️</i>
                     Incident
                 </button>
             </div>
             <div class="row">
                 <div class="col-xs-4"></div>
-                <button type="button" class="btn btn-default col-xs-4" onclick="end_track()">
-                    <i class="fa fa-suitcase"></i>
+                <button type="button" class="btn btn-secondary col-xs-4" onclick="end_track()">
+                    <i>🛑</i>
                     End track
                 </button>
                 <div class="col-xs-4"></div>

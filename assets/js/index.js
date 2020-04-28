@@ -36,10 +36,11 @@ function display_traces_list() {
         var content = `
            <div class="card">
              <div class="card-header">
-               ${track['info']['mode'] } - ${track['info']['ref'] }
+             <transport-thumbnail data-transport-mode="${track['info']['mode'] }" data-transport-network="${track['info']['network'] }" data-transport-line-code="${track['info']['ref'] }" data-transport-line-color="red" data-transport-destination="${track['info']['destination'] }">
+             </transport-thumbnail>
              </div>
              <div class="card-body">
-               <p class="card-text">${track['stops'].length } stops</p>
+               <p class="card-text">${track['stops'].length } stops 🚏</p>
                <a href="#" class="btn btn-primary" onclick="download_a_track('${i}')">Download</a> <a href="#" class="btn btn-primary" onclick="send_a_track_to_osm('${i}')">Send to OSM</a><a href="#" onclick="delete_a_track('${i}')">Delete</a>
              </div>
            </div>

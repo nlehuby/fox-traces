@@ -113,8 +113,9 @@ function save_track_info() {
 
     // display track name in main window
     var track_name = document.getElementById("track_name");
-    track_name.textContent = `${track_info['mode'] } - ${track_info['ref'] }`
-
+    track_name.innerHTML = ` <transport-thumbnail
+    data-transport-mode="${track_info['mode'] }" data-transport-network="${track_info['network'] }" data-transport-line-code="${track_info['ref'] }" data-transport-line-color="red" data-transport-destination="${track_info['destination'] }">
+</transport-thumbnail>`
 }
 
 function add_stop() {

@@ -94,6 +94,15 @@ function save_track_as_gpx(track) {
       </wpt> \n
       `
         }
+        //add a fake stop with other metadata
+        var i = track.stops.length - 1
+        out += `
+  <wpt lat="${track.stops[i].position.coords.latitude}" lon="${track.stops[i].position.coords.longitude}">
+        <time>${ convert_timestamp(track.stops[i].position.time)}</time>
+        <name>Metadata: ${track.info.mode || ""} ${track.info.ref || ""} - ${track.info.origin || ""} -${track.info.destination || ""} - frequency :${track.info.frequency || ""} - price: ${track.info.fare || ""} </name>
+
+  </wpt> \n
+  `
     }
 
     if (track.coords.length) {

@@ -107,6 +107,7 @@ function edit_track_info() {
     document.getElementById('track_operator').value = track_info['operator'];
     document.getElementById('track_network').value = track_info['network'];
     document.getElementById('track_fare').value = track_info['fare'];
+    document.getElementById('track_frequency').value = track_info['frequency'];
     document.getElementById('track_comment').value = track_info['comment'];
 
     //display modal
@@ -121,6 +122,7 @@ function save_track_info() {
     track_info['operator'] = document.getElementById('track_operator').value;
     track_info['network'] = document.getElementById('track_network').value;
     track_info['fare'] = document.getElementById('track_fare').value;
+    track_info['frequency'] = document.getElementById('track_frequency').value;
     track_info['comment'] = document.getElementById('track_comment').value;
 
     // display track name in main window

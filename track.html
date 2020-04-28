@@ -71,23 +71,34 @@
                             <input id="stop_name" type="text" class="form-control">
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-4">
                                 <label for="stop_passenger_up">Up</label>
                                 <input type="number" class="form-control" id="stop_passenger_up">
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-4">
                                 <label for="stop_passenger_total">previously ...</label>
                                 <input id="stop_passenger_total" type="text" class="form-control" disabled="disabled" placeholder="0 passengers">
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-4">
                                 <label for="stop_passenger_down">Down</label>
                                 <input type="number" class="form-control" id="stop_passenger_down">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="stop_type">&nbsp;Type
-                            </label>
-                            <input id="stop_type" type="text" class="form-control">
+                        <div class="form-group" id="form_for_stop_types">
+                            <label for="stop_type">&nbsp;Type:
+                            </label><br>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                <label class="form-check-label" for="inlineRadio1"><img src="assets/img/bus_type_1.png"></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                <label class="form-check-label" for="inlineRadio2"><img src="assets/img/bus_type_2.png"></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                                <label class="form-check-label" for="inlineRadio3"><img src="assets/img/bus_type_3.png"></label>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">

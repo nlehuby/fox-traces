@@ -123,7 +123,12 @@ function add_stop() {
     document.getElementById('stop_passenger_up').value = 0;
     document.getElementById('stop_passenger_total').value = passenger_count;
     document.getElementById('stop_passenger_down').value = 0;
-    document.getElementById('stop_type').value = "";
+    var stop_types = document.getElementById('form_for_stop_types')
+    if (track_info['mode'] == "bus") {
+        stop_types.style.display = "block";
+    } else {
+        stop_types.style.display = "none";
+    }
     $('#StopModal').modal('show');
 }
 
@@ -132,6 +137,16 @@ function save_stop_info() {
     new_stop['position'] = last_recorded_position;
 
     new_stop['name'] = document.getElementById('stop_name').value;
+    if (document.getElementById("inlineRadio1").checked) {
+        new_stop['name'] += " ( simple pole )"
+    }
+    if (document.getElementById("inlineRadio2").checked) {
+        new_stop['name'] += " ( with shelter )"
+    }
+    if (document.getElementById("inlineRadio3").checked) {
+        new_stop['name'] += " ( no signage )"
+    }
+
     new_stop['passenger_up'] = document.getElementById('stop_passenger_up').value;
     new_stop['passenger_down'] = document.getElementById('stop_passenger_down').value;
     passenger_count += new_stop['passenger_up'] - new_stop['passenger_down'];

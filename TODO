@@ -1,6 +1,4 @@
 
-type d'arrêt avec trois boutons (si bus), sinon, pas de type ?
-
 
 calcTrackDuration
 https://github.com/KaiRo-at/lantea/blob/master/js/ui.js#L308

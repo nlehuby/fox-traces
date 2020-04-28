@@ -46,21 +46,35 @@
 
 
         <!-- Oauth message - utilisateur pas connecté -->
-        <div class="alert alert-danger" role="alert" id="alert_no_auth">Vous n'êtes pas connecté à OpenStreetMap, vous ne pouvez donc pas effectuer de modifications.
-            <button id='OSM_authenticate'>Se connecter</button>
+        <div class="alert alert-danger" role="alert" id="alert_no_auth">You are not logged to OpenStreetMap. You won't be able to upload your tracks.
+            <button id='OSM_authenticate'>Log in</button>
         </div>
 
     <div class="row">
 
             <button type="button" class="btn btn-default col-xs-6" onclick="open_new_track_page()">
                 <i class="fa fa-suitcase"></i>
-                Nouvelle trace
+                New track
             </button>
         </div>
 
+            <div class="row" id="traces_list">
+                <div class="card">
+                  <div class="card-header">
+                    Fake track
+                  </div>
+                  <div class="card-body">
+                    <p class="card-text">Fake description of the track.</p>
+                    <a href="#" class="btn btn-primary">Button</a> <a href="#" class="btn btn-primary">Another button</a><a href="#">Yet another button</a>
+                  </div>
+                </div>
+
+
+            </div>
+
         <!-- Oauth message - utilisateur connecté -->
-        <div class="alert alert-success" role="alert" id="alert_auth">Vous êtes bien connecté à OpenStreetMap.
-            <a onclick="$('#OSM_auth_modal').modal('show');">En savoir plus</a>
+        <div class="alert alert-success" role="alert" id="alert_auth">You are connected to OpenStreetMap.
+            <a onclick="$('#OSM_auth_modal').modal('show');">Learn more</a>
         </div>
 
 
@@ -69,16 +83,16 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Connexion OSM</h4>
+                        <h4 class="modal-title">Connect to OSM</h4>
                     </div>
                     <div class="modal-body">
-                        Vous êtes connecté à OpenStreetMap en tant que
+                        You are logged in as
                         <span id="OSM_user">...</span>.
                         <br>
                         <a id='OSM_logout'>Se déconnecter</a>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->

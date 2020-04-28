@@ -18,7 +18,7 @@ var passenger_count = 0;
 var tracking_status_div = document.getElementById("tracking_status");
 
 var geoloc_options = {
-    enableHighAccuracy: true, 
+    enableHighAccuracy: true,
     timeout: 5000,
     maximumAge: 0
 };
@@ -71,7 +71,6 @@ function stop_gps_tracking() {
         console.error("no WakeLock")
     }
     navigator.geolocation.clearWatch(gGeoWatchID);
-    console.log(current_track)
 }
 
 function display_error(err) {
@@ -79,9 +78,10 @@ function display_error(err) {
 }
 
 function end_track() {
-    stop_gps_tracking()
-    //convertTrack("gpx")
-    saveTrack();
+    stop_gps_tracking();
+    persist_track();
+
+    window.location.href = "index.html";
 
 }
 
@@ -145,82 +145,16 @@ function add_incident() {
     add_stop() //TODO
 }
 
-function convertTrack(aTargetFormat) {
-  var out = "";
-  switch (aTargetFormat) {
-    case "gpx":
-      out += '<?xml version="1.0" encoding="UTF-8" ?>' + "\n\n";
-      out += '<gpx version="1.0" creator="Jungle Tracker" xmlns="http://www.topografix.com/GPX/1/0">' + "\n";
-      if (track_info) {
-          out += `
-          <metadata>
-            <desc>${track_info.mode || ""} - ${track_info.ref || ""} - ${track_info.destination || ""}</desc>
-          </metadata> \n
-          `
-      }
-      if (track_stops.length){
-          for (var i = 0; i < track_stops.length; i++) {
-              out += `
-              <wpt lat="${track_stops[i].position.coords.latitude}" lon="${track_stops[i].position.coords.longitude}">
-                    <time>${ makeISOString(track_stops[i].position.time)}</time>
-                    <name>${track_stops[i].name || ''}</name>
-                    <extensions>
-                        <passenger_up>${track_stops[i].passenger_up || ''}</passenger_up>
-                        <passenger_down>${track_stops[i].passenger_down || ''}</passenger_down>
-                        <passenger_total>${track_stops[i].passenger_total || ''}</passenger_total>
-                    </extensions>
-              </wpt> \n
-              `
-          }
-      }
-
-      if (current_track.length) {
-        out += '  <trk>' + "\n";
-        out += '    <trkseg>' + "\n";
-        for (var i = 0; i < current_track.length; i++) {
-          if (current_track[i].beginSegment && i > 0) {
-            out += '    </trkseg>' + "\n";
-            out += '    <trkseg>' + "\n";
-          }
-          out += '      <trkpt lat="' + current_track[i].coords.latitude + '" lon="' +
-                                        current_track[i].coords.longitude + '">' + "\n";
-          if (current_track[i].coords.altitude) {
-            out += '        <ele>' + current_track[i].coords.altitude + '</ele>' + "\n";
-          }
-          out += '        <time>' + makeISOString(current_track[i].time) + '</time>' + "\n";
-          out += '      </trkpt>' + "\n";
-        }
-        out += '    </trkseg>' + "\n";
-        out += '  </trk>' + "\n";
-      }
-      out += '</gpx>' + "\n";
-      break;
-    case "json":
-      out = JSON.stringify(current_track);
-      break;
-    default:
-      break;
-  }
-  console.log(out)
-  return out;
-}
-
-function makeISOString(aTimestamp) {
-  // ISO time format is YYYY-MM-DDTHH:mm:ssZ
-  var tsDate = new Date(aTimestamp);
-  // Note that .getUTCMonth() returns a number between 0 and 11 (0 for January)!
-  return tsDate.getUTCFullYear() + "-" +
-         (tsDate.getUTCMonth() < 9 ? "0" : "") + (tsDate.getUTCMonth() + 1 ) + "-" +
-         (tsDate.getUTCDate() < 10 ? "0" : "") + tsDate.getUTCDate() + "T" +
-         (tsDate.getUTCHours() < 10 ? "0" : "") + tsDate.getUTCHours() + ":" +
-         (tsDate.getUTCMinutes() < 10 ? "0" : "") + tsDate.getUTCMinutes() + ":" +
-         (tsDate.getUTCSeconds() < 10 ? "0" : "") + tsDate.getUTCSeconds() + "Z";
-}
-
-function saveTrack() {
-  if (current_track.length) {
-    var outDataURI = "data:application/gpx+xml," +
-                     encodeURIComponent(convertTrack("gpx"));
-    window.open(outDataURI, 'GPX Track');
-  }
+function persist_track() {
+    var full_track = {
+        "info": track_info,
+        "coords": current_track,
+        "stops": track_stops
+    }
+    if (!localStorage["traces"]) {
+        localStorage.setItem("traces", "[]");
+    }
+    var traces = JSON.parse(localStorage['traces']);
+    traces.push(full_track);
+    localStorage.setItem("traces", JSON.stringify(traces));
 }

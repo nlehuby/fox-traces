@@ -7,74 +7,89 @@
         <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="description" content="">
+        <meta name="description" content="a tool to save GPS tracks for bus routes">
         <meta name="author" content="nlehuby">
         <title>Fox traces</title>
 
-        <link rel="stylesheet" href="assets/third_parties/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/third_parties/w3.css">
 
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+        <style>
+
+            .w3-theme-l4 {
+                color: #000 !important;
+                background-color: #fff3cd !important;
+            }
+
+            .w3-theme-d4 {
+                color: #fff !important;
+                background-color: #ffc107 !important;
+            }
+
+        </style>
 
     </head>
 
-    <body>
+    <body class="w3-theme-l4">
 
-        <nav class="navbar navbar-light bg-warning">
-            <a class="navbar-brand" href="#">
+        <nav class="w3-bar w3-large w3-theme-d4">
+            <span class="w3-bar-item">
                 Fox traces
-            </a>
+            </span>
         </nav>
-        <div class="container">
+
+        <div class="w3-container">
 
             <!-- Oauth message - utilisateur pas connecté -->
-            <div class="alert alert-danger" role="alert" id="alert_no_auth">You are not logged to OpenStreetMap. You won't be able to upload your tracks.
-                <button id='OSM_authenticate'>Log in</button>
+            <div class="w3-panel w3-pale-red w3-leftbar w3-border-red" id="alert_no_auth">You are not logged to OpenStreetMap. You won't be able to upload your tracks.
+                <button class="w3-btn w3-black" id='OSM_authenticate'>Log in</button>
             </div>
-
-            <div class="row">
-
-                <button type="button" class="btn btn-primary col-xs-6" onclick="open_new_track_page()">
-                    <span>➕</span>
-                    New track
-                </button>
-            </div>
+            <p></p>
+            <button class="w3-btn w3-large w3-blue w3-ripple" onclick="open_new_track_page()">
+                <span>➕</span>
+                New track
+            </button>
+            <p class="w3-opacity">
+                <b>Old tracks</b>
+            </p>
 
             <div class="row" id="traces_list">
-                <div class="card">
-                    <div class="card-header">
-                        Fake track
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">Fake description of the track.</p>
-                        <a href="#" class="btn btn-primary">Button</a>
-                        <a href="#" class="btn btn-primary">Another button</a>
-                        <a href="#">Yet another button</a>
-                    </div>
+
+                <div class="w3-panel w3-white w3-card w3-display-container">
+                    <h4>Fake track</h4>
+                    <p>Fake description of the track.</p>
+                    <button class="w3-button w3-blue">Button</button>
+                    <button class="w3-button w3-blue">Another button</button>
+                    <a href="#">Yet another button</a>
+                    <p></p>
                 </div>
 
             </div>
 
             <!-- Oauth message - utilisateur connecté -->
-            <div class="alert alert-success" role="alert" id="alert_auth">You are connected to OpenStreetMap.
-                <a class="btn btn-light" onclick="$('#OSM_auth_modal').modal('show');">Learn more</a>
+            <div class="w3-panel w3-pale-green w3-leftbar w3-border-green" id="alert_auth">You are connected to OpenStreetMap.
+                <a class="w3-btn w3-black" onclick="document.getElementById('OSM_auth_modal').style.display = 'block';">Learn more</a>
             </div>
         </div>
 
-        <div class="modal fade" id="OSM_auth_modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
+        <div class="w3-modal" id="OSM_auth_modal">
+            <div class="w3-modal-content w3-card-4 w3-animate-zoom">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">OSM login</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                    <div class="w3-center">
+                        <h4>OSM login</h4>
+                        <span onclick="close_logout_modal()" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;
+                        </span>
                     </div>
-                    <div class="modal-body">
+
+                    <div class="w3-container">
                         You are logged in as
                         <span id="OSM_user">...</span>.
-                        <br>
-                        <a class="btn btn-light" id='OSM_logout'>Log out</a>
+                        <a class="w3-btn w3-black w3-ripple w3-round" id='OSM_logout'>Log out</a>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+
+                    <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+                        <button onclick="close_logout_modal()" class="w3-btn w3-black">Cancel</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -83,8 +98,6 @@
         </div>
         <!-- /.modal -->
 
-        <script src="assets/third_parties/jquery-3.2.1.slim.min.js"></script>
-        <script src="assets/third_parties/bootstrap.min.js"></script>
         <script src='assets/third_parties/OSM_js_editor/osmauth.min.js'></script>
         <script src="assets/js/osm_js_editor_auth.js"></script>
         <script src="assets/third_parties/jungle_bus_web_components.js"></script>

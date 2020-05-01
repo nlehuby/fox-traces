@@ -24,6 +24,7 @@ document.getElementById('OSM_authenticate').onclick = function() {
 document.getElementById('OSM_logout').onclick = function() {
     auth.logout();
     console.log("déconnexion en cours");
+    close_logout_modal();
     update_auth_visual_return()
 };
 
@@ -34,16 +35,15 @@ function display_traces_list() {
     for (var i = 0; i < traces.length; ++i) {
         var track = traces[i];
         var content = `
-           <div class="card">
-             <div class="card-header">
-             <transport-thumbnail data-transport-mode="${track['info']['mode'] }" data-transport-network="${track['info']['network'] }" data-transport-line-code="${track['info']['ref'] }" data-transport-line-color="red" data-transport-destination="${track['info']['destination'] }">
-             </transport-thumbnail>
-             </div>
-             <div class="card-body">
-               <p class="card-text">~ ${track['info']['duration'] } min - ${track['stops'].length } stops 🚏</p>
-               <a href="#" class="btn btn-primary" onclick="download_a_track('${i}')">Download</a> <a href="#" class="btn btn-primary" onclick="send_a_track_to_osm('${i}')">Send to OSM</a><a href="#" onclick="delete_a_track('${i}')">Delete</a>
-             </div>
-           </div>
+        <div class="w3-panel w3-white w3-card w3-display-container">
+            <h4> <transport-thumbnail data-transport-mode="${track['info']['mode'] }" data-transport-network="${track['info']['network'] }" data-transport-line-code="${track['info']['ref'] }" data-transport-line-color="red" data-transport-destination="${track['info']['destination'] }">
+             </transport-thumbnail></h4>
+            <p>~ ${track['info']['duration'] } min - ${track['stops'].length } stops 🚏</p>
+            <button class="w3-button w3-blue" onclick="download_a_track('${i}')">Download</button>
+            <button class="w3-button w3-blue" onclick="send_a_track_to_osm('${i}')">Send to OSM</button>
+            <a href="#" onclick="delete_a_track('${i}')">Delete</a>
+            <p></p>
+        </div>
            `;
 
         document.getElementById('traces_list').innerHTML += content;
@@ -141,6 +141,10 @@ function convert_timestamp(some_timestamp) {
 }
 
 //affichage du login OSM si connecté
+
+function close_logout_modal() {
+    document.getElementById('OSM_auth_modal').style.display = 'none';
+}
 function show_OSM_username() {
     auth.xhr({
         method: 'GET',

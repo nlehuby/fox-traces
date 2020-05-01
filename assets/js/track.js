@@ -13,14 +13,14 @@ var track_info = {
     "fare": "",
     "comment": "",
     "duration": "",
-    "frequency":""
+    "frequency": ""
 };
 var passenger_count = 0;
 
 var tracking_status_div = document.getElementById("tracking_status");
 
 var geoloc_options = {
-    //enableHighAccuracy: true,
+    enableHighAccuracy: true,
     timeout: 5000,
     maximumAge: 0
 };
@@ -52,7 +52,7 @@ function on_geoloc_success(position) {
             tracking_status_div.textContent += " for  " + Math.round(duration / 60) + " min";
         }
     }
-    tracking_status_div.textContent += " (accuracy:  " +Math.round( tPoint.coords.accuracy) + " )";
+    tracking_status_div.textContent += " (accuracy:  " + Math.round(tPoint.coords.accuracy) + " )";
     // Only add point to track is accuracy is good enough.
     if (tPoint.coords.accuracy < 100000) { //TODO (100 ?)
         current_track.push(tPoint);
@@ -83,7 +83,7 @@ function stop_gps_tracking() {
         console.error("no WakeLock")
     }
     navigator.geolocation.clearWatch(gGeoWatchID);
-    var duration = (current_track[current_track.length-1].time - current_track[0].time) / 1000;
+    var duration = (current_track[current_track.length - 1].time - current_track[0].time) / 1000;
     track_info["duration"] = Math.round(duration / 60);
 }
 
@@ -111,7 +111,7 @@ function edit_track_info() {
     document.getElementById('track_comment').value = track_info['comment'];
 
     //display modal
-    $('#TrackInfoModal').modal('show');
+    document.getElementById('TrackInfoModal').style.display = 'block';
 }
 
 function save_track_info() {
@@ -130,6 +130,8 @@ function save_track_info() {
     track_name.innerHTML = ` <transport-thumbnail
     data-transport-mode="${track_info['mode'] }" data-transport-network="${track_info['network'] }" data-transport-line-code="${track_info['ref'] }" data-transport-line-color="red" data-transport-destination="${track_info['destination'] }">
 </transport-thumbnail>`
+
+    close_track_modal()
 }
 
 function add_stop() {
@@ -143,7 +145,7 @@ function add_stop() {
     } else {
         stop_types.style.display = "none";
     }
-    $('#StopModal').modal('show');
+    document.getElementById('StopModal').style.display = 'block';
 }
 
 function save_stop_info() {
@@ -169,6 +171,16 @@ function save_stop_info() {
     document.getElementById('passengers_count').textContent = passenger_count;
 
     track_stops.push(new_stop);
+
+    close_stop_modal()
+}
+
+function close_stop_modal() {
+    document.getElementById('StopModal').style.display = 'none';
+}
+
+function close_track_modal() {
+    document.getElementById('TrackInfoModal').style.display = 'none';
 }
 
 function add_incident() {

@@ -1,5 +1,9 @@
+TODO:
+- gestion des incidents
+- envoi de la trace à OSM (pas implémenté dans la lib osm-auth)
 
-osm-requets pour la connexion à OSM et pour envoyer la trace ?
-envoi de la trace à OSM : https://wiki.openstreetmap.org/wiki/API_v0.6#Create:_POST_.2Fapi.2F0.6.2Fgpx.2Fcreate
 
-gestion des incidents
+Limites à investiguer :
+- capacité de stockage avec le localStorage
+- quel avenir pour l'API navigator.requestWakeLock ?
+- compatibilité avec d'autres navigateurs que Firefox ?

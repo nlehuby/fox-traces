@@ -3,9 +3,8 @@ function basic_auth(){
 }
 
 var auth = osmAuth({
-    oauth_secret: 'fDsGn1eoIN5ZMBEtByqhLSk9SWqdlYiXZOj7EDov',
-    oauth_consumer_key: 'cmF6HPd3zZnjep7y3FiOIZQ9Pbk8MsMWAKArKcgI',
+    oauth_secret: '86Qk3kX42MOM6IPmx1tz1VpkgIAfnhRQRBIyDbc2',
+    oauth_consumer_key: 'reniJXFiuqbRLg8lCjtLD60aMlXB8WjCdMCtd60q',
     landing: 'land.html',
     url: 'https://www.openstreetmap.org'
 });
-

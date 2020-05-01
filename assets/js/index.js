@@ -60,7 +60,29 @@ function download_a_track(track_id) {
 }
 
 function send_a_track_to_osm(track_id) {
-    alert("not implemeted yet") // TODO
+    alert("not implemeted yet");
+    var track = traces[track_id];
+    if (track['coords']) {
+        const formData = new FormData();
+        formData.append('file', save_track_as_gpx(track));
+        formData.append('description', 'gg');
+        formData.append('tags', 'test,test_again');
+        formData.append('visibility', 'private');
+
+        auth.xhr({
+            method: 'POST',
+            body: formData, //does not work - https://github.com/osmlab/osm-auth/issues/35
+            path: '/api/0.6/gpx/create'
+        }, OSM_track_send_done);
+    }
+}
+
+function OSM_track_send_done(err, res) {
+    if (err) {
+        console.error(err);
+        return;
+    }
+    console.log(res)
 }
 
 function delete_a_track(track_id) {
@@ -145,6 +167,7 @@ function convert_timestamp(some_timestamp) {
 function close_logout_modal() {
     document.getElementById('OSM_auth_modal').style.display = 'none';
 }
+
 function show_OSM_username() {
     auth.xhr({
         method: 'GET',

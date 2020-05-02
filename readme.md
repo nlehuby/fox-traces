@@ -7,13 +7,13 @@ A GPS tracker for Firefox OS, to collect the shape and stops of public transport
 - record the track of a bus / boat bus / train route
 - record location of the stops
 - record equipment of the stops for bus routes
-- record number ofpassengers getting up and down at each stop
+- record number of passengers getting up and down at each stop
 - record metadata about the route (price, frequency, origin, destination, etc)
 - record incident (traffic jam, etc) - *not implemented yet*
 - download track as GPX
 - send track to OSM - *not implemented yet*
 
-TODO - add some screenshots
+![screenshot](screenshots/list.png) - ![screenshot](screenshots/track-0.png) - ![screenshot](screenshots/track-1.png) - ![screenshot](screenshots/track-2.png)-  ![screenshot](screenshots/track-4.png)- ![screenshot](screenshots/track-5.png)
 
 ## Credits
 

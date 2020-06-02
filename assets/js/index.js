@@ -2,7 +2,6 @@ function open_new_track_page() {
     window.location.href = "track.html";
 }
 
-update_auth_visual_return()
 
 if (!localStorage["traces"]) {
     localStorage.setItem("traces", "[]");
@@ -11,22 +10,7 @@ var traces = JSON.parse(localStorage['traces']);
 traces = traces.reverse()
 display_traces_list()
 
-
-
-
-//connexion Oauth
-document.getElementById('OSM_authenticate').onclick = function() {
-    auth.authenticate(function() {
-        console.log("authenfication terminée")
-        update_auth_visual_return()
-    });
-};
-document.getElementById('OSM_logout').onclick = function() {
-    auth.logout();
-    console.log("déconnexion en cours");
-    close_logout_modal();
-    update_auth_visual_return()
-};
+update_auth_visual_return()
 
 
 function display_traces_list() {
@@ -40,8 +24,15 @@ function display_traces_list() {
              </transport-thumbnail></h4>
             <p>~ ${track['info']['duration'] } min - ${track['stops'].length } stops 🚏</p>
             <button class="w3-button w3-blue" onclick="download_a_track('${i}')">Download</button>
-            <button class="w3-button w3-blue" onclick="send_a_track_to_osm('${i}')">Send to OSM</button>
-            <a href="#" onclick="delete_a_track('${i}')">Delete</a>
+            `
+            if (track["osm_status"]){
+                
+                content += `<a class="w3-button w3-blue" href="${track['osm_status']['track_url']}" target="_blank">See on OSM.org</a> `
+            } else {
+                content += `<button class="w3-button w3-blue" onclick="send_a_track_to_osm('${i}')">Send to OSM</button>`
+
+            }
+            content += `<a href="#" onclick="delete_a_track('${i}')">Delete</a>
             <p></p>
         </div>
            `;
@@ -59,30 +50,37 @@ function download_a_track(track_id) {
     }
 }
 
-function send_a_track_to_osm(track_id) {
-    alert("not implemeted yet");
+async function send_a_track_to_osm(track_id) {
     var track = traces[track_id];
     if (track['coords']) {
         const formData = new FormData();
-        formData.append('file', save_track_as_gpx(track));
-        formData.append('description', 'gg');
-        formData.append('tags', 'test,test_again');
-        formData.append('visibility', 'private');
+        var blob = new Blob([save_track_as_gpx(track)], { type: "text/xml"});
+        formData.append('file', blob);
+        var description = `${track['info']['mode']} ${track['info']['ref']}${(track['info']['destination'] ? ' to ' + track['info']['destination'] : ' ')}`;      
+        formData.append('description', description);
+        formData.append('tags', `fox-traces, ${track['info']['mode']} route`);
+        formData.append('visibility', 'identifiable');
 
-        auth.xhr({
+        let response = await fetch('https://api.openstreetmap.org/api/0.6/gpx/create', {
             method: 'POST',
-            body: formData, //does not work - https://github.com/osmlab/osm-auth/issues/35
-            path: '/api/0.6/gpx/create'
-        }, OSM_track_send_done);
-    }
-}
+            headers: {"Authorization": `${osm_authentication.get_authorization()}`},
+            body: formData
+          });
+      
+        let result = await response.text();
 
-function OSM_track_send_done(err, res) {
-    if (err) {
-        console.error(err);
-        return;
+        if (isNaN(parseInt(result))){
+            alert("upload fail")
+            console.error(result)
+        } else {
+              alert("Your track has been sent to OSM, you will receive an email when the processing will be done")
+              var user = osm_authentication.get_user_name();
+              var track_url = `https://www.openstreetmap.org/user/${user}/traces/${result}`;
+              track["osm_status"] = {"sent":true, "track_url": track_url}
+              localStorage.setItem("traces", JSON.stringify(traces));
+              display_traces_list()
+        }
     }
-    console.log(res)
 }
 
 function delete_a_track(track_id) {
@@ -162,38 +160,48 @@ function convert_timestamp(some_timestamp) {
         (tsDate.getUTCSeconds() < 10 ? "0" : "") + tsDate.getUTCSeconds() + "Z";
 }
 
-//affichage du login OSM si connecté
 
+// handle osm authentication
 function close_logout_modal() {
     document.getElementById('OSM_auth_modal').style.display = 'none';
 }
 
-function show_OSM_username() {
-    auth.xhr({
-        method: 'GET',
-        path: '/api/0.6/user/details'
-    }, OSM_user_name_done);
-}
+document.getElementById('OSM_authenticate').onclick = function() {
+    document.getElementById('OSM_auth_modal').style.display = 'block';
+};
 
-function OSM_user_name_done(err, res) {
-    if (err) {
-        console.log(err);
-        alert("Échec autour de l'authentification OSM")
-        return;
-    }
-    var u = res.getElementsByTagName('user')[0];
-    document.getElementById('OSM_user').innerHTML = u.getAttribute('display_name');
+document.getElementById('OSM_logout').onclick = function() {
+    osm_authentication.logout();
+    close_logout_modal();
+    update_auth_visual_return()
+};
+document.getElementById('OSM_login').onclick = function() {
+    handle_osm_login_form();
+    update_auth_visual_return()
+};
 
-}
-
-function update_auth_visual_return() {
-    //affichage des bandeaux d'avertissement
-    if (auth.authenticated()) {
+async function update_auth_visual_return() {
+    var is_osm_authenticated_result = await osm_authentication.status();
+    if (is_osm_authenticated_result["is_authenticated"]) {
         document.getElementById('alert_no_auth').style.display = 'none';
         document.getElementById('alert_auth').style.display = 'block';
-        show_OSM_username();
+        document.getElementById('osm_login_form').style.display = 'none';
+        document.getElementById('osm_logout_form').style.display = 'block';
+        document.getElementById('OSM_user').innerHTML = is_osm_authenticated_result["user_name"];
     } else {
         document.getElementById('alert_auth').style.display = 'none';
         document.getElementById('alert_no_auth').style.display = 'block';
+        document.getElementById('osm_logout_form').style.display = 'none';
+        document.getElementById('osm_login_form').style.display = 'block';
+        if (is_osm_authenticated_result["error"]){
+            console.error(is_osm_authenticated_result["error"])
+        }    
     }
+}
+
+function handle_osm_login_form(){
+    var osm_user = document.getElementById('osm_username_input').value;
+    var osm_pswd = document.getElementById('osm_pswd_input').value;
+    osm_authentication.login(osm_user,osm_pswd);
+    close_logout_modal();
 }

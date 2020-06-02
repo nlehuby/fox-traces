@@ -1,9 +1,8 @@
 TODO:
 - gestion des incidents
-- envoi de la trace à OSM (pas implémenté dans la lib osm-auth)
-
 
 Limites à investiguer :
 - capacité de stockage avec le localStorage
 - quel avenir pour l'API navigator.requestWakeLock ?
+    - dans Chrome, une [fonctionnalité similaire](https://medium.com/dev-channel/experimenting-with-the-wake-lock-api-b6f42e0a089f) est en test
 - compatibilité avec d'autres navigateurs que Firefox ?

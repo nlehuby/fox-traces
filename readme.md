@@ -11,7 +11,7 @@ A GPS tracker for Firefox OS, to collect the shape and stops of public transport
 - record metadata about the route (price, frequency, origin, destination, etc)
 - record incident (traffic jam, etc) - *not implemented yet*
 - download track as GPX
-- send track to OSM - *not implemented yet*
+- send track to OSM
 
 ![screenshot](screenshots/list.png) - ![screenshot](screenshots/track-0.png) - ![screenshot](screenshots/track-1.png) - ![screenshot](screenshots/track-2.png)-  ![screenshot](screenshots/track-4.png)- ![screenshot](screenshots/track-5.png)
 
